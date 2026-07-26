@@ -32,7 +32,7 @@
                   radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
       pointer-events: none; z-index: 0;
     }
-    .game-container { max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+    .game-container { max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; }
     .header { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 20px; position: relative; width: 100%; }
     /* .title {
       font-family: 'Noto Kufi Arabic', serif; font-size: 3rem; font-weight: 800; letter-spacing: 0.05em;
@@ -375,7 +375,7 @@ const adTimer = setInterval(() => {
 }, 1000);
 
 function skipAd() {
-  if (adTime <= 0) adOverlay.style.display = 'none';
+  if (adTime <= 0) adOverlay.remove();
 }
     const KEYBOARD_ROWS = [
   ['ؤ', 'ء', 'ئ'],
