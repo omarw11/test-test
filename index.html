@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T9T03MPHHF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-T9T03MPHHF');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>كلمتنا </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0a0a0f 0%, #1a1a2e 50%, #0f1729 100%);
+      display: flex; flex-direction: column; align-items: center;
+      font-family: 'Tajawal', 'Noto Kufi Arabic', sans-serif;
+      color: #fff; padding: 20px; overflow-x: hidden; position: relative;
+    }
+    body::before {
+      content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(217, 119, 6, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+      pointer-events: none; z-index: 0;
+    }
+    .game-container { max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+    .header { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 20px; position: relative; width: 100%; }
+    /* .title {
+      font-family: 'Noto Kufi Arabic', serif; font-size: 3rem; font-weight: 800; letter-spacing: 0.05em;
+      background: linear-gradient(135deg, #fff 0%, #fcd34d 50%, #f59e0b 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-shadow: 0 0 60px rgba(245, 158, 11, 0.4);
+    } */
+     .title-logo {
+  width: 180px;
+  max-width: 85%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  /* filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.25));
+}
+      /* Add these: */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+    .subtitle { font-size: 0.9rem; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; }
+    .help-btn {
+      position: absolute; top: 8px; left: 0;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .help-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+    .timer { margin-top: 8px; font-size: 0.85rem; color: rgba(255,255,255,0.6); direction: ltr; }
+    .timer-label { color: rgba(255,255,255,0.4); margin-left: 8px; }
+    .message-container { height: 44px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .message {
+      background: rgba(255,255,255,0.95); color: #1a1a2e; padding: 10px 28px;
+      border-radius: 10px; font-weight: 700; font-size: 1rem;
+      animation: slideDown 0.25s ease-out; box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    .message.hidden { display: none; }
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .board { display: flex; flex-direction: column; gap: 5px; margin-bottom: 28px; margin-right: 20px; }
+    .row { display: flex; gap: 5px; direction: rtl; }
+    .row.shake { animation: shake 0.5s ease-in-out; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-10px)} 40%,80%{transform:translateX(10px)} }
+    .tile { width: 64px; height: 64px; perspective: 1000px; }
+    .tile-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s ease; }
+    .tile-inner.flip { transform: rotateX(180deg); }
+    .tile-inner.pop { animation: pop 0.1s ease; }
+    @keyframes pop { 50% { transform: scale(1.08); } }
+    .tile-front, .tile-back {
+      position: absolute; width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Noto Kufi Arabic', serif; font-size: 2rem; font-weight: 700;
+      border-radius: 10px; backface-visibility: hidden;
+    }
+    .tile-front { background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.12); color: #fff; }
+    .tile-front.filled { border-color: rgba(255,255,255,0.5); }
+    .tile-back { transform: rotateX(180deg); border: none; }
+    .tile-back.correct { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); box-shadow: 0 4px 24px rgba(34,197,94,0.5); }
+    .tile-back.present { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 4px 24px rgba(245,158,11,0.5); }
+    .tile-back.absent { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); }
+    .keyboard { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 500px; }
+    .keyboard-row { display: flex; justify-content: center; gap: 5px; direction: rtl; }
+    .key {
+      height: 44px; min-width: 28px; padding: 0 8px; border: none; border-radius: 8px;
+      font-family: 'Noto Kufi Arabic', serif; font-size: 1rem; font-weight: 600; cursor: pointer;
+      transition: all 0.15s ease; background: rgba(255,255,255,0.12); color: #fff;
+    }
+    .key:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
+    .key:active { transform: translateY(0); }
+    .key.wide { min-width: 60px; font-size: 0.85rem; padding: 0 12px; }
+    .key.correct { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); box-shadow: 0 2px 12px rgba(34,197,94,0.4); }
+    .key.present { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 2px 12px rgba(245,158,11,0.4); }
+    .key.absent { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.25); }
+    .key:disabled { cursor: not-allowed; opacity: 0.5; }
+    .game-over-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8); z-index: 100; justify-content: center; align-items: center;
+    }
+    .game-over-overlay.visible { display: flex; }
+    .game-over-modal {
+      background: linear-gradient(145deg, #1a1a2e 0%, #0f1729 100%);
+      padding: 40px; border-radius: 20px; text-align: center; max-width: 350px;
+      border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .game-over-modal h2 { font-size: 1.8rem; margin-bottom: 16px; color: #fcd34d; }
+    .game-over-modal p { color: rgba(255,255,255,0.7); margin-bottom: 12px; line-height: 1.6; }
+    .game-over-modal .word-reveal { font-size: 2rem; font-weight: 800; color: #fff; margin: 20px 0; font-family: 'Noto Kufi Arabic', serif; }
+    .game-over-modal .next-word-timer { font-size: 1.5rem; color: #f59e0b; direction: ltr; margin-top: 16px; }
+    .stats { margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.4); }
+    .instructions { margin-top: 24px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; max-width: 400px; text-align: center; }
+    .instructions h3 { font-size: 1rem; margin-bottom: 12px; color: rgba(255,255,255,0.8); }
+    .instructions p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.8; }
+    .color-hint { display: inline-block; width: 18px; height: 18px; border-radius: 4px; vertical-align: middle; margin: 0 4px; }
+    .color-hint.green { background: #22c55e; }
+    .color-hint.yellow { background: #f59e0b; }
+    .color-hint.gray { background: rgba(255,255,255,0.15); }
+    .loading {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 200px; gap: 16px; color: rgba(255,255,255,0.5); font-size: 1rem;
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #f59e0b; border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Welcome / Rules Modal ─────────────────────────────── */
+    .welcome-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85); z-index: 200;
+      justify-content: center; align-items: center;
+      padding: 20px; backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .welcome-overlay.visible { display: flex; animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .welcome-modal {
+      background: linear-gradient(145deg, #1a1a2e 0%, #0f1729 100%);
+      padding: 32px 28px; border-radius: 20px;
+      max-width: 420px; width: 100%;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      position: relative;
+      animation: modalIn 0.4s ease-out;
+      max-height: 90vh; overflow-y: auto;
+    }
+    @keyframes modalIn { from { transform: scale(0.9) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    .welcome-close {
+      position: absolute; top: 14px; left: 16px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.5); font-size: 1.5rem;
+      cursor: pointer; line-height: 1; padding: 4px 8px;
+      transition: color 0.2s ease;
+    }
+    .welcome-close:hover { color: #fff; }
+    .welcome-title {
+      font-family: 'Noto Kufi Arabic', serif;
+      font-size: 2rem; font-weight: 800; text-align: center;
+      background: linear-gradient(135deg, #fff 0%, #fcd34d 50%, #f59e0b 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 6px;
+    }
+    .welcome-subtitle {
+      text-align: center; font-size: 0.95rem;
+      color: rgba(255,255,255,0.6); margin-bottom: 24px;
+    }
+    .rules-section { margin-bottom: 20px; }
+    .rules-section h3 {
+      font-size: 1.05rem; color: #fcd34d;
+      margin-bottom: 10px; font-weight: 700;
+    }
+    .rules-section p {
+      font-size: 0.92rem; color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+    }
+    .example-row {
+      display: flex; gap: 5px; direction: rtl;
+      justify-content: center; margin: 12px 0;
+    }
+    .example-tile {
+      width: 42px; height: 42px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Noto Kufi Arabic', serif; font-size: 1.4rem; font-weight: 700;
+      border-radius: 8px; color: #fff;
+    }
+    .example-tile.correct { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+    .example-tile.present { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+    .example-tile.absent { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); }
+    .example-tile.empty { background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.12); }
+    .example-caption {
+      font-size: 0.85rem; color: rgba(255,255,255,0.6);
+      text-align: center; margin-top: 4px;
+    }
+    .example-caption strong { color: #fcd34d; }
+    .welcome-start-btn {
+      width: 100%; margin-top: 16px;
+      padding: 14px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #fff; font-family: 'Noto Kufi Arabic', serif;
+      font-size: 1.1rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+    }
+    .welcome-start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245, 158, 11, 0.5); }
+    .welcome-start-btn:active { transform: translateY(0); }
+
+    @media (max-width: 400px) {
+      .tile { width: 54px; height: 54px; }
+      .tile-front, .tile-back { font-size: 1.6rem; }
+      .key { min-width: 26px; height: 46px; font-size: 1rem; }
+      .title { font-size: 2.4rem; }
+      .welcome-modal { padding: 24px 20px; }
+      .welcome-title { font-size: 1.7rem; }
+      .example-tile { width: 38px; height: 38px; font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <header class="header">
+      <button class="help-btn" id="helpBtn" aria-label="عرض القواعد">؟</button>
+      <!-- <h1 class="title">كلمتنا</h1> -->
+      <img src="kilmatna_logo_orange_2.svg" alt="كلمتنا" class="title-logo">
+      <p class="subtitle">خمّن الكلمة ب ٦ محاولات</p>
+      <div class="timer">
+        <span class="timer-label">كلمة يديدة في:</span>
+        <span id="countdown">--:--:--</span>
+      </div>
+    </header>
+    <div class="message-container">
+      <div id="message" class="message hidden"></div>
+    </div>
+    <div id="game-area">
+      <div class="loading">
+        <div class="spinner"></div>
+        <span>جاري التحميل...</span>
+      </div>
+    </div>
+    <div id="stats" class="stats"></div>
+    <div class="instructions">
+      <h3>شلون نلعب ؟</h3>
+      <p>
+        <span class="color-hint green"></span> أخضر: الحرف صح و  بمكانه<br>
+        <span class="color-hint yellow"></span> أصفر: الحرف موجود بس بمكان ثاني<br>
+        <span class="color-hint gray"></span> رمادي: الحرف مو موجود<br><br>
+        🕐 كلمة يديدة كل يوم!
+      </p>
+    </div>
+  </div>
+
+  <!-- Welcome / Rules Modal -->
+  <div id="welcomeOverlay" class="welcome-overlay">
+    <div class="welcome-modal">
+      <button class="welcome-close" id="welcomeClose" aria-label="إغلاق">✕</button>
+      <h2 class="welcome-title">شلون نلعب ؟</h2>
+      <p class="welcome-subtitle">خمّن كلمة اليوم ب ٦ محاولات</p>
+
+      <div class="rules-section">
+        <h3>القواعد</h3>
+        <p>
+          • كل تخمين لازم يكون كلمة من ٥ أحرف<br>
+          • بعد كل تخمين، يتغير لون الحرف على حسب مكانه<br>
+          • عندكم ٦ محاولات   
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>الأمثلة</h3>
+
+        <div class="example-row">
+          <div class="example-tile correct">ك</div>
+          <div class="example-tile empty">ت</div>
+          <div class="example-tile empty">ا</div>
+          <div class="example-tile empty">ب</div>
+          <div class="example-tile empty">ة</div>
+        </div>
+        <p class="example-caption">حرف <strong>ك</strong> موجود في الكلمة وفي المكان الصحيح</p>
+
+        <div class="example-row">
+          <div class="example-tile empty">ج</div>
+          <div class="example-tile present">م</div>
+          <div class="example-tile empty">ي</div>
+          <div class="example-tile empty">ل</div>
+          <div class="example-tile empty">ة</div>
+        </div>
+        <p class="example-caption">حرف <strong>م</strong> موجود لكن في مكان ثاني</p>
+
+        <div class="example-row">
+          <div class="example-tile empty">ي</div>
+          <div class="example-tile empty">ن</div>
+          <div class="example-tile absent">س</div>
+          <div class="example-tile empty">و</div>
+          <div class="example-tile empty">ن</div>
+        </div>
+        <p class="example-caption">حرف <strong>س</strong> غير موجود في الكلمة</p>
+      </div>
+
+      <div class="rules-section">
+        <h3>🕐 كلمة يديدة كل يوم</h3>
+        <p>تنزل كلمة يديدة كل يوم في منتصف الليل. بالتوفيق!</p>
+      </div>
+
+      <button class="welcome-start-btn" id="welcomeStart">يلا نلعب!</button>
+    </div>
+  </div>
+
+  <div id="gameOverOverlay" class="game-over-overlay">
+    <div class="game-over-modal">
+  <button id="closeModal" onclick="document.getElementById('gameOverOverlay').classList.remove('visible')" style="position:absolute;top:12px;left:16px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.5rem;cursor:pointer;line-height:1;">✕</button>
+      <h2 id="gameOverTitle">أحسنت!</h2>
+      <p id="gameOverMessage">لقد فزت!</p>
+      <div id="wordReveal" class="word-reveal"></div>
+      <p>الكلمة القادمة في:</p>
+      <div id="modalCountdown" class="next-word-timer">--:--:--</div>
+    </div>
+  </div>
+
+  <script>
+    const KEYBOARD_ROWS = [
+  ['ؤ', 'ء', 'ئ'],
+  ['ج', 'ح', 'خ', 'ه', 'ع', 'غ', 'ف', 'ق', 'ث', 'ص', 'ض'],
+  ['ة', 'ك', 'م', 'ن', 'ت', 'ا', 'ل', 'ب', 'ي', 'س', 'ش'],
+  ['⌫', 'د', 'ذ', 'ط', 'ظ', 'ز', 'و', 'ى', 'ر', 'إدخال']
+];
+
+    const STORAGE_KEY = 'kalima_game_state';
+    const WELCOME_SEEN_KEY = 'kalima_welcome_seen';
+    let WORDS = [];
+    let targetWord = '';
+    let guesses = [];
+    let currentGuess = '';
+    let gameState = 'playing';
+    let keyboardStatus = {};
+    let todayKey = '';
+
+    const gameArea = document.getElementById('game-area');
+    const messageEl = document.getElementById('message');
+    const statsEl = document.getElementById('stats');
+    const countdownEl = document.getElementById('countdown');
+    const gameOverOverlay = document.getElementById('gameOverOverlay');
+    const gameOverTitle = document.getElementById('gameOverTitle');
+    const gameOverMessage = document.getElementById('gameOverMessage');
+    const wordReveal = document.getElementById('wordReveal');
+    const modalCountdown = document.getElementById('modalCountdown');
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const welcomeClose = document.getElementById('welcomeClose');
+    const welcomeStart = document.getElementById('welcomeStart');
+    const helpBtn = document.getElementById('helpBtn');
+
+    let boardEl, keyboardEl;
+
+    // ─── Welcome Modal ───────────────────────────────────────
+    function showWelcomeModal() {
+      welcomeOverlay.classList.add('visible');
+    }
+    function hideWelcomeModal() {
+      welcomeOverlay.classList.remove('visible');
+      try { localStorage.setItem(WELCOME_SEEN_KEY, '1'); } catch(e) {}
+    }
+    welcomeClose.addEventListener('click', hideWelcomeModal);
+    welcomeStart.addEventListener('click', hideWelcomeModal);
+    welcomeOverlay.addEventListener('click', (e) => {
+      if (e.target === welcomeOverlay) hideWelcomeModal();
+    });
+    helpBtn.addEventListener('click', () => welcomeOverlay.classList.add('visible'));
+
+    // Show welcome on first load
+    function maybeShowWelcome() {
+      try {
+        if (!localStorage.getItem(WELCOME_SEEN_KEY)) {
+          showWelcomeModal();
+        }
+      } catch(e) {
+        showWelcomeModal();
+      }
+    }
+
+    // ─── Load words from trxgt3rssrtbabygwrangler.txt ───────────────────────────────────────────
+    async function loadWords() {
+      try {
+        const response = await fetch('trxgt3rssrtbabygwrangler.txt');
+        if (!response.ok) throw new Error('Failed to load trxgt3rssrtbabygwrangler.txt');
+        const text = await response.text();
+        WORDS = text.split('\n').map(w => w.trim()).filter(w => w.length === 5);
+        if (WORDS.length === 0) throw new Error('No valid 5-letter words found in trxgt3rssrtbabygwrangler.txt');
+        init();
+      } catch (err) {
+        gameArea.innerHTML = `
+          <div class="loading">
+            <span style="color:#f87171;">⚠️ تعذّر تحميل قائمة الكلمات</span>
+            <span style="font-size:0.8rem; color:rgba(255,255,255,0.3);">${err.message}</span>
+          </div>`;
+      }
+    }
+
+    // ─── Helpers ─────────────────────────────────────────────────────────────
+    function getTodayKey() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    }
+
+    function getWordForDay(dateKey) {
+  // Get the day number since a fixed start date
+  const startDate = new Date('2026-05-26');
+  const today = new Date(dateKey);
+  const dayNumber = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+
+  // Shuffle words using a seeded order based on total word count
+  const shuffled = [...WORDS];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const seed = (i * 9301 + 49297) % 233280;
+    const j = Math.floor((seed / 233280) * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  // Cycle through shuffled list, never repeating until all words are used
+  const index = dayNumber % shuffled.length;
+  return shuffled[index];
+}
+
+    function getMsUntilMidnight() {
+      const now = new Date();
+      const midnight = new Date(now);
+      midnight.setHours(24, 0, 0, 0);
+      return midnight - now;
+    }
+
+    function formatTime(ms) {
+      const t = Math.floor(ms / 1000);
+      const h = Math.floor(t / 3600);
+      const m = Math.floor((t % 3600) / 60);
+      const s = t % 60;
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    function updateCountdown() {
+      const formatted = formatTime(getMsUntilMidnight());
+      countdownEl.textContent = formatted;
+      modalCountdown.textContent = formatted;
+      if (getTodayKey() !== todayKey) location.reload();
+    }
+
+    // ─── State persistence ────────────────────────────────────────────────────
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ dateKey: todayKey, guesses, gameState, keyboardStatus }));
+    }
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return null;
+        const state = JSON.parse(saved);
+        if (state.dateKey !== todayKey) { localStorage.removeItem(STORAGE_KEY); return null; }
+        return state;
+      } catch(e) { return null; }
+    }
+
+    // ─── Init ─────────────────────────────────────────────────────────────────
+    function init() {
+      todayKey = getTodayKey();
+      targetWord = getWordForDay(todayKey);
+
+      const savedState = loadState();
+      if (savedState) {
+        guesses = savedState.guesses;
+        gameState = savedState.gameState;
+        keyboardStatus = savedState.keyboardStatus;
+        currentGuess = '';
+      } else {
+        guesses = []; currentGuess = ''; gameState = 'playing'; keyboardStatus = {};
+      }
+
+      // Build the game area
+      gameArea.innerHTML = `<div id="board" class="board"></div><div id="keyboard" class="keyboard"></div>`;
+      boardEl = document.getElementById('board');
+      keyboardEl = document.getElementById('keyboard');
+
+      renderBoard();
+      renderKeyboard();
+      if (savedState && guesses.length > 0) restorePreviousGuesses();
+      updateStats();
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+      if (gameState !== 'playing') setTimeout(() => showGameOverModal(), 500);
+
+      // Show welcome modal on first visit (after game initializes)
+      maybeShowWelcome();
+    }
+
+    // ─── Board ────────────────────────────────────────────────────────────────
+    function renderBoard() {
+      boardEl.innerHTML = '';
+      for (let i = 0; i < 6; i++) {
+        const row = document.createElement('div');
+        row.className = 'row'; row.id = `row-${i}`;
+        for (let j = 0; j < 5; j++) {
+          const tile = document.createElement('div');
+          tile.className = 'tile';
+          tile.innerHTML = `<div class="tile-inner" id="tile-${i}-${j}">
+            <div class="tile-front" id="front-${i}-${j}"></div>
+            <div class="tile-back" id="back-${i}-${j}"></div>
+          </div>`;
+          row.appendChild(tile);
+        }
+        boardEl.appendChild(row);
+      }
+    }
+
+    function restorePreviousGuesses() {
+      guesses.forEach((guess, rowIndex) => {
+        for (let i = 0; i < 5; i++) {
+          const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
+          const front = document.getElementById(`front-${rowIndex}-${i}`);
+          const back = document.getElementById(`back-${rowIndex}-${i}`);
+          const letter = guess[i];
+          const status = getLetterStatus(letter, i, guess);
+          front.textContent = letter;
+          back.textContent = letter;
+          back.className = 'tile-back ' + status;
+          tileInner.classList.add('flip');
+        }
+      });
+      updateKeyboard();
+    }
+
+    // ─── Keyboard ─────────────────────────────────────────────────────────────
+    function renderKeyboard() {
+      keyboardEl.innerHTML = '';
+      KEYBOARD_ROWS.forEach(row => {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'keyboard-row';
+        row.forEach(key => {
+          const keyEl = document.createElement('button');
+          keyEl.className = 'key' + (key.length > 1 ? ' wide' : '');
+          if (keyboardStatus[key]) keyEl.className += ' ' + keyboardStatus[key];
+          keyEl.textContent = key;
+          keyEl.dataset.key = key;
+          keyEl.addEventListener('click', () => handleKeyPress(key));
+          if (gameState !== 'playing') keyEl.disabled = true;
+          rowEl.appendChild(keyEl);
+        });
+        keyboardEl.appendChild(rowEl);
+      });
+    }
+
+    function updateKeyboard() {
+      document.querySelectorAll('.key').forEach(keyEl => {
+        const key = keyEl.dataset.key;
+        if (keyboardStatus[key]) keyEl.className = 'key' + (key.length > 1 ? ' wide' : '') + ' ' + keyboardStatus[key];
+        if (gameState !== 'playing') keyEl.disabled = true;
+      });
+    }
+
+    // ─── Game logic ───────────────────────────────────────────────────────────
+    function getLetterStatus(letter, index, word) {
+      if (targetWord[index] === letter) return 'correct';
+      if (targetWord.includes(letter)) {
+        const targetCount = targetWord.split('').filter(l => l === letter).length;
+        const correctCount = word.split('').filter((l, i) => l === letter && targetWord[i] === letter).length;
+        const beforeCount = word.slice(0, index).split('').filter((l, i) => l === letter && targetWord[i] !== letter).length;
+        if (beforeCount < targetCount - correctCount) return 'present';
+      }
+      return 'absent';
+    }
+
+    function updateCurrentRow() {
+      const rowIndex = guesses.length;
+      for (let i = 0; i < 5; i++) {
+        const front = document.getElementById(`front-${rowIndex}-${i}`);
+        const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
+        const letter = currentGuess[i] || '';
+        if (letter && front.textContent !== letter) {
+          tileInner.classList.add('pop');
+          setTimeout(() => tileInner.classList.remove('pop'), 100);
+        }
+        front.textContent = letter;
+        front.className = 'tile-front' + (letter ? ' filled' : '');
+      }
+    }
+
+    function revealGuess(rowIndex, guess) {
+      return new Promise(resolve => {
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
+            const back = document.getElementById(`back-${rowIndex}-${i}`);
+            const letter = guess[i];
+            const status = getLetterStatus(letter, i, guess);
+            back.textContent = letter;
+            back.className = 'tile-back ' + status;
+            tileInner.classList.add('flip');
+            if (status === 'correct') keyboardStatus[letter] = 'correct';
+            else if (status === 'present' && keyboardStatus[letter] !== 'correct') keyboardStatus[letter] = 'present';
+            else if (!keyboardStatus[letter]) keyboardStatus[letter] = 'absent';
+            if (i === 4) setTimeout(() => { updateKeyboard(); resolve(); }, 300);
+          }, i * 300);
+        }
+      });
+    }
+
+    function showMessage(text, duration = 1500) {
+      messageEl.textContent = text;
+      messageEl.classList.remove('hidden');
+      if (duration > 0) setTimeout(() => messageEl.classList.add('hidden'), duration);
+    }
+
+    function shakeRow(rowIndex) {
+      const row = document.getElementById(`row-${rowIndex}`);
+      row.classList.add('shake');
+      setTimeout(() => row.classList.remove('shake'), 500);
+    }
+
+    function updateStats() {
+      const arabicNums = ['٠','١','٢','٣','٤','٥','٦'];
+      statsEl.textContent = `${arabicNums[guesses.length]}/٦ محاولات`;
+    }
+
+    function showGameOverModal() {
+      if (gameState === 'won') {
+        const messages = ['وحش!!','ذيب!!','بطل!','كفو!','عاش!','عندك احسن!'];
+        gameOverTitle.textContent = messages[Math.min(guesses.length - 1, 5)];
+        gameOverMessage.textContent = `فزت في ${guesses.length} محاولات`;
+      } else {
+        gameOverTitle.textContent = 'انتهت اللعبة';
+        gameOverMessage.textContent = 'حظاً أوفر غداً!';
+      }
+      wordReveal.textContent = targetWord;
+      gameOverOverlay.classList.add('visible');
+    }
+
+    async function submitGuess() {
+      if (currentGuess.length !== 5) {
+        shakeRow(guesses.length); showMessage('أدخل ٥ أحرف'); return;
+      }
+      if (!WORDS.includes(currentGuess)) {
+        shakeRow(guesses.length); showMessage('الكلمة غير موجودة في القاموس'); return;
+      }
+      const rowIndex = guesses.length;
+      guesses.push(currentGuess);
+      await revealGuess(rowIndex, currentGuess);
+      if (currentGuess === targetWord) {
+        gameState = 'won'; saveState(); setTimeout(() => showGameOverModal(), 500);
+      } else if (guesses.length >= 6) {
+        gameState = 'lost'; saveState(); setTimeout(() => showGameOverModal(), 500);
+      } else {
+        saveState();
+      }
+      currentGuess = '';
+      updateStats();
+    }
+
+    function handleKeyPress(key) {
+      if (gameState !== 'playing') return;
+      if (key === 'إدخال') submitGuess();
+      else if (key === '⌫') { currentGuess = currentGuess.slice(0, -1); updateCurrentRow(); }
+      else if (currentGuess.length < 5) { currentGuess += key; updateCurrentRow(); }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      // Close welcome modal on Escape
+      if (e.key === 'Escape' && welcomeOverlay.classList.contains('visible')) {
+        hideWelcomeModal();
+        return;
+      }
+      if (gameState !== 'playing') return;
+      if (e.key === 'Enter') handleKeyPress('إدخال');
+      else if (e.key === 'Backspace') handleKeyPress('⌫');
+      else if (/^[\u0600-\u06FF]$/.test(e.key)) handleKeyPress(e.key);
+    });
+
+    // ─── Start ────────────────────────────────────────────────────────────────
+    loadWords();
+  </script>
+</body>
+</html>
