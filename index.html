@@ -234,16 +234,23 @@
 <body>
 <!-- Ad Overlay -->
 <div id="adOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;">
-  <div style="background:linear-gradient(145deg,#1a1a2e,#0f1729);border:1px solid rgba(245,158,11,0.3);border-radius:20px;overflow:hidden;max-width:420px;width:90%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
-    <div id="skipBtn" style="position:absolute;top:14px;left:14px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 14px;font-size:0.8rem;color:rgba(255,255,255,0.4);cursor:not-allowed;z-index:10;" onclick="skipAd()">
+  <div style="background:#111827;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;max-width:420px;width:90%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+    
+    <!-- Skip button -->
+    <div id="skipBtn" style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 14px;font-size:0.8rem;color:rgba(255,255,255,0.4);cursor:not-allowed;z-index:10;font-family:Tajawal,Arial;" onclick="skipAd()">
       تخطي بعد <span id="adCountdown">5</span>s
     </div>
+
+    <!-- Image -->
     <a href="https://jaribskateshop.com" target="_blank" style="display:block;">
-      <img src="https://jaribskateshop.com/wp-content/uploads/2023/01/cropped-jarib-logo.png" alt="Jarib Skate Shop" style="width:100%;display:block;border-radius:20px 20px 0 0;" onerror="this.src='https://placehold.co/420x300/1a1a2e/f59e0b?text=Jarib+Skate+Shop'"/>
-      <div style="padding:16px;text-align:center;">
-        <p style="color:rgba(255,255,255,0.7);font-size:0.95rem;font-family:Tajawal,Arial;">تفضل وزور متجرنا 🛹</p>
-      </div>
+      <img src="https://jaribskateshop.com/wp-content/uploads/2023/01/cropped-jarib-logo.png" alt="Jarib Skate Shop" style="width:100%;display:block;" onerror="this.src='https://placehold.co/420x300/111827/ffffff?text=Jarib+Skate+Shop'"/>
     </a>
+
+    <!-- Link at bottom -->
+    <a href="https://jaribskateshop.com" target="_blank" style="display:block;text-align:center;padding:14px;font-family:Tajawal,Arial;font-size:0.9rem;color:rgba(255,255,255,0.5);text-decoration:none;border-top:1px solid rgba(255,255,255,0.07);">
+      jaribskateshop.com
+    </a>
+
   </div>
 </div>
   
