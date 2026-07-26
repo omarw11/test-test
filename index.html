@@ -394,11 +394,11 @@
     // ─── Load words from trxgt3rssrtbabygwrangler.txt ───────────────────────────────────────────
     async function loadWords() {
       try {
-        const response = await fetch('trxgt3rssrtbabygwrangler.txt');
-        if (!response.ok) throw new Error('Failed to load trxgt3rssrtbabygwrangler.txt');
+        const response = await fetch('words.txt');
+        if (!response.ok) throw new Error('Failed to load words.txt');
         const text = await response.text();
         WORDS = text.split('\n').map(w => w.trim()).filter(w => w.length === 5);
-        if (WORDS.length === 0) throw new Error('No valid 5-letter words found in trxgt3rssrtbabygwrangler.txt');
+        if (WORDS.length === 0) throw new Error('No valid 5-letter words found in words.txt');
         init();
       } catch (err) {
         gameArea.innerHTML = `
