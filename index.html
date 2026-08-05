@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T9T03MPHHF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-T9T03MPHHF');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>كلمتنا - لعبة الكلمات العربية</title>
+  <title>كلمتنا </title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -16,15 +25,22 @@
       font-family: 'Tajawal', 'Noto Kufi Arabic', sans-serif;
       color: #fff; padding: 20px; overflow-x: hidden; position: relative;
     }
-    .game-container { max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center; }
-    .header { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 20px; width: 100%; }
-    .header-top { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-    .title {
-      font-family: 'Noto Kufi Arabic', serif; font-size: 3rem; font-weight: 800; letter-spacing: 0.05em;
-      background: linear-gradient(135deg, #fff 0%, #fcd34d 50%, #f59e0b 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .game-container { max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; }
+    .header { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 20px; position: relative; width: 100%; }
+    .title-logo {
+      width: 180px; max-width: 85%; height: auto; display: block; margin: 0 auto;
+      transform: translateZ(0); -webkit-transform: translateZ(0);
     }
     .subtitle { font-size: 0.9rem; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; }
+    .help-btn {
+      position: absolute; top: 8px; left: 0;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7); font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .help-btn:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
     .timer { margin-top: 8px; font-size: 0.85rem; color: rgba(255,255,255,0.6); direction: ltr; }
     .timer-label { color: rgba(255,255,255,0.4); margin-left: 8px; }
     .message-container { height: 44px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
@@ -35,8 +51,8 @@
     }
     .message.hidden { display: none; }
     @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .board { display: flex; flex-direction: column; gap: 6px; margin-bottom: 28px; margin-right: 80px; }
-    .row { display: flex; gap: 6px; direction: rtl; }
+    .board { display: flex; flex-direction: column; gap: 5px; margin-bottom: 28px; margin-right: 20px; }
+    .row { display: flex; gap: 5px; direction: rtl; }
     .row.shake { animation: shake 0.5s ease-in-out; }
     @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-10px)} 40%,80%{transform:translateX(10px)} }
     .tile { width: 64px; height: 64px; perspective: 1000px; }
@@ -56,10 +72,10 @@
     .tile-back.correct { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); box-shadow: 0 4px 24px rgba(34,197,94,0.5); }
     .tile-back.present { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 4px 24px rgba(245,158,11,0.5); }
     .tile-back.absent { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); }
-    .keyboard { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 500px; }
+    .keyboard { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 500px; }
     .keyboard-row { display: flex; justify-content: center; gap: 5px; direction: rtl; }
     .key {
-      height: 44px; min-width: 32px; padding: 0 8px; border: none; border-radius: 8px;
+      height: 44px; min-width: 28px; padding: 0 8px; border: none; border-radius: 8px;
       font-family: 'Noto Kufi Arabic', serif; font-size: 1rem; font-weight: 600; cursor: pointer;
       transition: all 0.15s ease; background: rgba(255,255,255,0.12); color: #fff;
     }
@@ -77,7 +93,7 @@
     .game-over-overlay.visible { display: flex; }
     .game-over-modal {
       background: linear-gradient(145deg, #1a1a2e 0%, #0f1729 100%);
-      padding: 40px; border-radius: 20px; text-align: center; max-width: 350px; width: 90%;
+      padding: 40px; border-radius: 20px; text-align: center; max-width: 350px;
       border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.5);
       position: relative;
     }
@@ -85,7 +101,6 @@
     .game-over-modal p { color: rgba(255,255,255,0.7); margin-bottom: 12px; line-height: 1.6; }
     .game-over-modal .word-reveal { font-size: 2rem; font-weight: 800; color: #fff; margin: 20px 0; font-family: 'Noto Kufi Arabic', serif; }
     .game-over-modal .next-word-timer { font-size: 1.5rem; color: #f59e0b; direction: ltr; margin-top: 16px; }
-    .close-modal-btn { position: absolute; top: 12px; left: 16px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 1.5rem; cursor: pointer; line-height: 1; }
     .stats { margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.4); }
     .instructions { margin-top: 24px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; max-width: 400px; text-align: center; }
     .instructions h3 { font-size: 1rem; margin-bottom: 12px; color: rgba(255,255,255,0.8); }
@@ -98,618 +113,657 @@
     .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: #f59e0b; border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Auth UI ── */
-    .auth-bar { display: flex; align-items: center; gap: 10px; }
-    .auth-btn {
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-      color: #fff; border-radius: 10px; padding: 8px 16px; font-family: 'Tajawal', sans-serif;
-      font-size: 0.85rem; cursor: pointer; transition: all 0.15s ease; white-space: nowrap;
+    /* ─── Welcome Modal ─── */
+    .welcome-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85); z-index: 200;
+      justify-content: center; align-items: center;
+      padding: 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
     }
+    .welcome-overlay.visible { display: flex; animation: fadeIn 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .welcome-modal {
+      background: linear-gradient(145deg, #1a1a2e 0%, #0f1729 100%);
+      padding: 32px 28px; border-radius: 20px; max-width: 420px; width: 100%;
+      border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      position: relative; animation: modalIn 0.4s ease-out; max-height: 90vh; overflow-y: auto;
+    }
+    @keyframes modalIn { from { transform: scale(0.9) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    .welcome-close { position: absolute; top: 14px; left: 16px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 4px 8px; transition: color 0.2s ease; }
+    .welcome-close:hover { color: #fff; }
+    .welcome-title { font-family: 'Noto Kufi Arabic', serif; font-size: 2rem; font-weight: 800; text-align: center; background: linear-gradient(135deg, #fff 0%, #fcd34d 50%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 6px; }
+    .welcome-subtitle { text-align: center; font-size: 0.95rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+    .rules-section { margin-bottom: 20px; }
+    .rules-section h3 { font-size: 1.05rem; color: #fcd34d; margin-bottom: 10px; font-weight: 700; }
+    .rules-section p { font-size: 0.92rem; color: rgba(255,255,255,0.75); line-height: 1.7; }
+    .example-row { display: flex; gap: 5px; direction: rtl; justify-content: center; margin: 12px 0; }
+    .example-tile { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; font-family: 'Noto Kufi Arabic', serif; font-size: 1.4rem; font-weight: 700; border-radius: 8px; color: #fff; }
+    .example-tile.correct { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+    .example-tile.present { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+    .example-tile.absent { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); }
+    .example-tile.empty { background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.12); }
+    .example-caption { font-size: 0.85rem; color: rgba(255,255,255,0.6); text-align: center; margin-top: 4px; }
+    .example-caption strong { color: #fcd34d; }
+    .welcome-start-btn { width: 100%; margin-top: 16px; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; font-family: 'Noto Kufi Arabic', serif; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4); }
+    .welcome-start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245, 158, 11, 0.5); }
+    .welcome-start-btn:active { transform: translateY(0); }
+
+    /* ─── Auth ─── */
+    .auth-bar { position: absolute; top: 8px; right: 0; display: flex; align-items: center; gap: 8px; }
+    .auth-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 10px; padding: 6px 12px; font-family: 'Tajawal', sans-serif; font-size: 0.8rem; cursor: pointer; transition: all 0.15s ease; white-space: nowrap; }
     .auth-btn:hover { background: rgba(255,255,255,0.2); }
     .auth-btn.google { background: #fff; color: #333; font-weight: 600; }
     .auth-btn.google:hover { background: #f1f1f1; }
-    .user-avatar { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #f59e0b; cursor: pointer; }
+    .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #f59e0b; cursor: pointer; }
     .user-streak { font-size: 0.85rem; color: #fcd34d; font-weight: 700; }
+    .lb-btn { position: absolute; top: 8px; right: 0; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 10px; padding: 6px 12px; font-family: 'Tajawal', sans-serif; font-size: 0.8rem; cursor: pointer; }
+    .lb-btn:hover { background: rgba(255,255,255,0.15); }
 
-    /* ── Leaderboard ── */
-    .leaderboard-overlay {
-      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center;
-    }
+    /* ─── Leaderboard ─── */
+    .leaderboard-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; }
     .leaderboard-overlay.visible { display: flex; }
-    .leaderboard-modal {
-      background: linear-gradient(145deg, #1a1a2e 0%, #0f1729 100%);
-      border-radius: 20px; padding: 30px; max-width: 400px; width: 90%;
-      border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      position: relative; max-height: 80vh; overflow-y: auto;
-    }
+    .leaderboard-modal { background: linear-gradient(145deg, #1a1a2e 0%, #0f1729 100%); border-radius: 20px; padding: 30px; max-width: 400px; width: 90%; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.6); position: relative; max-height: 80vh; overflow-y: auto; }
     .leaderboard-modal h2 { font-size: 1.4rem; color: #fcd34d; margin-bottom: 20px; text-align: center; }
     .leaderboard-close { position: absolute; top: 14px; left: 16px; background: none; border: none; color: rgba(255,255,255,0.5); font-size: 1.4rem; cursor: pointer; }
-    .leaderboard-entry {
-      display: flex; align-items: center; gap: 12px; padding: 12px;
-      border-radius: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.04);
-    }
+    .leaderboard-entry { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.04); }
     .leaderboard-entry.highlight { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); }
     .leaderboard-rank { font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.4); min-width: 28px; text-align: center; }
-    .leaderboard-rank.gold { color: #fcd34d; }
-    .leaderboard-rank.silver { color: #d1d5db; }
-    .leaderboard-rank.bronze { color: #b45309; }
     .leaderboard-avatar { width: 36px; height: 36px; border-radius: 50%; }
     .leaderboard-name { flex: 1; font-size: 0.95rem; color: #fff; }
     .leaderboard-streak { font-size: 0.95rem; font-weight: 700; color: #f59e0b; }
     .leaderboard-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 12px 0; }
-    .lb-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 10px; padding: 8px 14px; font-family: 'Tajawal', sans-serif; font-size: 0.85rem; cursor: pointer; }
-    .lb-btn:hover { background: rgba(255,255,255,0.15); }
 
     @media (max-width: 400px) {
       .tile { width: 54px; height: 54px; }
       .tile-front, .tile-back { font-size: 1.6rem; }
-      .key { min-width: 26px; height: 40px; font-size: 0.9rem; }
-      .title { font-size: 2.4rem; }
+      .key { min-width: 26px; height: 46px; font-size: 1rem; }
+      .welcome-modal { padding: 24px 20px; }
+      .welcome-title { font-size: 1.7rem; }
+      .example-tile { width: 38px; height: 38px; font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
-  <div class="game-container">
-    <header class="header">
-      <div class="header-top">
-        <button class="lb-btn" onclick="openLeaderboard()">🏆 المتصدرين</button>
-        <h1 class="title">كلمتنا</h1>
-        <div class="auth-bar" id="authBar">
-          <button class="auth-btn google" onclick="signInWithGoogle()">دخول بـ Google</button>
-        </div>
-      </div>
-      <p class="subtitle">خمّن الكلمة في ٦ محاولات</p>
-      <div class="timer">
-        <span class="timer-label">كلمة جديدة في:</span>
-        <span id="countdown">--:--:--</span>
-      </div>
-    </header>
 
-    <div class="message-container">
-      <div id="message" class="message hidden"></div>
+<!-- Ad Overlay -->
+<div id="adOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#111827;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;max-width:420px;width:90%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+    <div id="skipBtn" style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 14px;font-size:0.8rem;color:rgba(255,255,255,0.4);cursor:not-allowed;z-index:10;font-family:Tajawal,Arial;" onclick="skipAd()">
+      تخطي بعد <span id="adCountdown">5</span>s
     </div>
+    <a href="https://jaribskateshop.com" target="_blank" style="display:block;">
+      <img src="https://jaribskateshop.com/wp-content/uploads/2023/01/cropped-jarib-logo.png" alt="Jarib Skate Shop" style="width:100%;display:block;" onerror="this.src='https://placehold.co/420x300/111827/ffffff?text=Jarib+Skate+Shop'"/>
+    </a>
+    <a href="https://jaribskateshop.com" target="_blank" style="display:block;text-align:center;padding:14px;font-family:Tajawal,Arial;font-size:0.9rem;color:rgba(255,255,255,0.5);text-decoration:none;border-top:1px solid rgba(255,255,255,0.07);">
+      jaribskateshop.com
+    </a>
+  </div>
+</div>
 
-    <div id="game-area">
-      <div class="loading"><div class="spinner"></div><span>جاري التحميل...</span></div>
+<div class="game-container">
+  <header class="header">
+    <button class="help-btn" id="helpBtn" aria-label="عرض القواعد">؟</button>
+    <img src="kilmatna_logo_orange_2.svg" alt="كلمتنا" class="title-logo">
+    <p class="subtitle">خمّن الكلمة ب ٦ محاولات</p>
+    <div class="timer">
+      <span class="timer-label">كلمة يديدة في:</span>
+      <span id="countdown">--:--:--</span>
     </div>
+    <!-- Auth bar -->
+    <div class="auth-bar" id="authBar">
+      <button class="auth-btn google" onclick="signInWithGoogle()">دخول بـ Google</button>
+    </div>
+    <!-- Leaderboard button -->
+    <button style="position:absolute;top:48px;right:0;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:10px;padding:5px 10px;font-family:Tajawal,sans-serif;font-size:0.75rem;cursor:pointer;" onclick="openLeaderboard()">🏆 المتصدرين</button>
+  </header>
 
-    <div id="stats" class="stats"></div>
+  <div class="message-container">
+    <div id="message" class="message hidden"></div>
+  </div>
+  <div id="game-area">
+    <div class="loading"><div class="spinner"></div><span>جاري التحميل...</span></div>
+  </div>
+  <div id="stats" class="stats"></div>
+  <div class="instructions">
+    <h3>شلون نلعب ؟</h3>
+    <p>
+      <span class="color-hint green"></span> أخضر: الحرف صح و بمكانه<br>
+      <span class="color-hint yellow"></span> أصفر: الحرف موجود بس بمكان ثاني<br>
+      <span class="color-hint gray"></span> رمادي: الحرف مو موجود<br><br>
+      🕐 كلمة يديدة كل يوم!
+    </p>
+  </div>
+</div>
 
-    <div class="instructions">
-      <h3>شلون تلعب؟</h3>
+<!-- Welcome Modal -->
+<div id="welcomeOverlay" class="welcome-overlay">
+  <div class="welcome-modal">
+    <button class="welcome-close" id="welcomeClose" aria-label="إغلاق">✕</button>
+    <h2 class="welcome-title">شلون نلعب ؟</h2>
+    <p class="welcome-subtitle">خمّن كلمة اليوم ب ٦ محاولات</p>
+    <div class="rules-section">
+      <h3>القواعد</h3>
       <p>
-        <span class="color-hint green"></span> أخضر: الحرف صحيح في مكانه<br>
-        <span class="color-hint yellow"></span> أصفر: الحرف موجود في مكان آخر<br>
-        <span class="color-hint gray"></span> رمادي: الحرف غير موجود<br><br>
-        🕐 كلمة جديدة كل يوم!
+        • كل تخمين لازم يكون كلمة من ٥ أحرف<br>
+        • بعد كل تخمين، يتغير لون الحرف على حسب مكانه<br>
+        • عندكم ٦ محاولات
       </p>
     </div>
-  </div>
-
-  <!-- Game Over Modal -->
-  <div id="gameOverOverlay" class="game-over-overlay">
-    <div class="game-over-modal">
-      <button class="close-modal-btn" onclick="document.getElementById('gameOverOverlay').classList.remove('visible')">✕</button>
-      <h2 id="gameOverTitle">أحسنت!</h2>
-      <p id="gameOverMessage">لقد فزت!</p>
-      <div id="wordReveal" class="word-reveal"></div>
-      <p id="streakDisplay" style="color:#fcd34d;font-weight:700;"></p>
-      <p>الكلمة القادمة في:</p>
-      <div id="modalCountdown" class="next-word-timer">--:--:--</div>
-    </div>
-  </div>
-
-  <!-- Leaderboard Modal -->
-  <div id="leaderboardOverlay" class="leaderboard-overlay">
-    <div class="leaderboard-modal">
-      <button class="leaderboard-close" onclick="closeLeaderboard()">✕</button>
-      <h2>🏆 المتصدرين</h2>
-      <div id="leaderboardList"><div class="loading"><div class="spinner"></div></div></div>
-    </div>
-  </div>
-
-  <!-- Ad Overlay -->
-  <div id="adOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;">
-    <div style="background:#111827;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;max-width:420px;width:90%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
-      <div id="skipBtn" style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 14px;font-size:0.8rem;color:rgba(255,255,255,0.4);cursor:not-allowed;z-index:10;font-family:Tajawal,Arial;" onclick="skipAd()">
-        تخطي بعد <span id="adCountdown">5</span>s
+    <div class="rules-section">
+      <h3>الأمثلة</h3>
+      <div class="example-row">
+        <div class="example-tile correct">ك</div>
+        <div class="example-tile empty">ت</div>
+        <div class="example-tile empty">ا</div>
+        <div class="example-tile empty">ب</div>
+        <div class="example-tile empty">ة</div>
       </div>
-      <a href="https://jaribskateshop.com" target="_blank" style="display:block;">
-        <img src="https://jaribskateshop.com/wp-content/uploads/2023/01/cropped-jarib-logo.png" alt="Jarib Skate Shop" style="width:100%;display:block;" onerror="this.src='https://placehold.co/420x300/111827/ffffff?text=Jarib+Skate+Shop'"/>
-      </a>
-      <a href="https://jaribskateshop.com" target="_blank" style="display:block;text-align:center;padding:14px;font-family:Tajawal,Arial;font-size:0.9rem;color:rgba(255,255,255,0.5);text-decoration:none;border-top:1px solid rgba(255,255,255,0.07);">
-        jaribskateshop.com
-      </a>
+      <p class="example-caption">حرف <strong>ك</strong> موجود في الكلمة وفي المكان الصحيح</p>
+      <div class="example-row">
+        <div class="example-tile empty">ج</div>
+        <div class="example-tile present">م</div>
+        <div class="example-tile empty">ي</div>
+        <div class="example-tile empty">ل</div>
+        <div class="example-tile empty">ة</div>
+      </div>
+      <p class="example-caption">حرف <strong>م</strong> موجود لكن في مكان ثاني</p>
+      <div class="example-row">
+        <div class="example-tile empty">ي</div>
+        <div class="example-tile empty">ن</div>
+        <div class="example-tile absent">س</div>
+        <div class="example-tile empty">و</div>
+        <div class="example-tile empty">ن</div>
+      </div>
+      <p class="example-caption">حرف <strong>س</strong> غير موجود في الكلمة</p>
     </div>
+    <div class="rules-section">
+      <h3>🕐 كلمة يديدة كل يوم</h3>
+      <p>تنزل كلمة يديدة كل يوم في منتصف الليل. بالتوفيق!</p>
+    </div>
+    <button class="welcome-start-btn" id="welcomeStart">يلا نلعب!</button>
   </div>
+</div>
 
-  <!-- Firebase SDKs -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+<!-- Game Over Modal -->
+<div id="gameOverOverlay" class="game-over-overlay">
+  <div class="game-over-modal">
+    <button id="closeModal" onclick="document.getElementById('gameOverOverlay').classList.remove('visible')" style="position:absolute;top:12px;left:16px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.5rem;cursor:pointer;line-height:1;">✕</button>
+    <h2 id="gameOverTitle">أحسنت!</h2>
+    <p id="gameOverMessage">لقد فزت!</p>
+    <div id="wordReveal" class="word-reveal"></div>
+    <p id="streakDisplay" style="color:#fcd34d;font-weight:700;margin-top:8px;"></p>
+    <p>الكلمة القادمة في:</p>
+    <div id="modalCountdown" class="next-word-timer">--:--:--</div>
+  </div>
+</div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA7E-wNKFAZ3E0ZzxD9jD4t9VIayMVhCYA",
-      authDomain: "kilmatnat-614fb.firebaseapp.com",
-      projectId: "kilmatnat-614fb",
-      storageBucket: "kilmatnat-614fb.firebasestorage.app",
-      messagingSenderId: "785307749459",
-      appId: "1:785307749459:web:4d8726070627e0c9788aa6",
-      measurementId: "G-DQRYHXZ4N0"
-    };
+<!-- Leaderboard Modal -->
+<div id="leaderboardOverlay" class="leaderboard-overlay">
+  <div class="leaderboard-modal">
+    <button class="leaderboard-close" onclick="closeLeaderboard()">✕</button>
+    <h2>🏆 المتصدرين</h2>
+    <div id="leaderboardList"><div class="loading"><div class="spinner"></div></div></div>
+  </div>
+</div>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const provider = new GoogleAuthProvider();
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+  import { getFirestore, doc, getDoc, setDoc, collection, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-    let currentUser = null;
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7E-wNKFAZ3E0ZzxD9jD4t9VIayMVhCYA",
+    authDomain: "kilmatnat-614fb.firebaseapp.com",
+    projectId: "kilmatnat-614fb",
+    storageBucket: "kilmatnat-614fb.firebasestorage.app",
+    messagingSenderId: "785307749459",
+    appId: "1:785307749459:web:4d8726070627e0c9788aa6",
+    measurementId: "G-DQRYHXZ4N0"
+  };
 
-    // ── Auth ──────────────────────────────────────────────────────────────────
-    window.signInWithGoogle = async () => {
-      try { await signInWithPopup(auth, provider); }
-      catch(e) { console.error(e); }
-    };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const provider = new GoogleAuthProvider();
+  let currentUser = null;
 
-    window.signOutUser = async () => {
-      await signOut(auth);
-    };
+  function getTodayKey() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  }
 
-    onAuthStateChanged(auth, async (user) => {
-      currentUser = user;
-      const authBar = document.getElementById('authBar');
-      if (user) {
-        const userData = await getUserData(user.uid);
-        const streak = userData?.streak || 0;
-        authBar.innerHTML = `
-          <span class="user-streak">🔥 ${streak}</span>
-          <img class="user-avatar" src="${user.photoURL}" title="${user.displayName}" onclick="window.signOutUser()"/>
-        `;
-      } else {
-        authBar.innerHTML = `<button class="auth-btn google" onclick="signInWithGoogle()">دخول بـ Google</button>`;
+  function getYesterdayKey() {
+    const d = new Date(); d.setDate(d.getDate() - 1);
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  async function getUserData(uid) {
+    const snap = await getDoc(doc(db, 'users', uid));
+    return snap.exists() ? snap.data() : null;
+  }
+
+  function updateAuthBar(user, streak) {
+    const authBar = document.getElementById('authBar');
+    if (user) {
+      authBar.innerHTML = `
+        <span class="user-streak">🔥 ${streak}</span>
+        <img class="user-avatar" src="${user.photoURL}" title="${user.displayName} — اضغط للخروج" onclick="window.signOutUser()"/>
+      `;
+    } else {
+      authBar.innerHTML = `<button class="auth-btn google" onclick="signInWithGoogle()">دخول بـ Google</button>`;
+    }
+  }
+
+  window.signInWithGoogle = async () => {
+    try { await signInWithPopup(auth, provider); }
+    catch(e) { console.error('Login error:', e); }
+  };
+
+  window.signOutUser = async () => { await signOut(auth); };
+
+  onAuthStateChanged(auth, async (user) => {
+    currentUser = user;
+    if (user) {
+      const data = await getUserData(user.uid);
+      updateAuthBar(user, data?.streak || 0);
+    } else {
+      updateAuthBar(null, 0);
+    }
+  });
+
+  window.updateStreakOnGameEnd = async (won) => {
+    const streakDisplay = document.getElementById('streakDisplay');
+    if (!currentUser) {
+      streakDisplay.textContent = 'سجل دخولك لحفظ سلسلتك!';
+      return;
+    }
+    const uid = currentUser.uid;
+    const today = getTodayKey();
+    const yesterday = getYesterdayKey();
+    const ref = doc(db, 'users', uid);
+    const snap = await getDoc(ref);
+    let streak = snap.exists() ? (snap.data().streak || 0) : 0;
+    const lastPlayed = snap.exists() ? snap.data().lastPlayed : null;
+
+    if (lastPlayed === today) {
+      streakDisplay.textContent = won ? `🔥 سلسلتك: ${streak} يوم` : 'انتهت سلسلتك 😔';
+      return;
+    }
+
+    if (won) {
+      streak = (lastPlayed === yesterday) ? streak + 1 : 1;
+    } else {
+      streak = 0;
+    }
+
+    await setDoc(ref, {
+      uid, name: currentUser.displayName, photo: currentUser.photoURL,
+      streak, lastPlayed: today
+    }, { merge: true });
+
+    updateAuthBar(currentUser, streak);
+    streakDisplay.textContent = won ? `🔥 سلسلتك: ${streak} يوم` : 'انتهت سلسلتك 😔';
+  };
+
+  window.openLeaderboard = async () => {
+    document.getElementById('leaderboardOverlay').classList.add('visible');
+    const listEl = document.getElementById('leaderboardList');
+    listEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+    const q = query(collection(db, 'users'), orderBy('streak', 'desc'), limit(10));
+    const snap = await getDocs(q);
+    const entries = [];
+    snap.forEach(d => entries.push(d.data()));
+    const medals = ['🥇','🥈','🥉'];
+    let html = entries.map((e, i) => {
+      const isMe = currentUser && e.uid === currentUser.uid;
+      const rank = i < 3 ? medals[i] : `${i+1}`;
+      return `<div class="leaderboard-entry ${isMe ? 'highlight' : ''}">
+        <div class="leaderboard-rank">${rank}</div>
+        <img class="leaderboard-avatar" src="${e.photo || ''}" onerror="this.src='https://placehold.co/36x36/1a1a2e/fff?text=؟'"/>
+        <div class="leaderboard-name">${e.name || 'مجهول'}${isMe ? ' (أنت)' : ''}</div>
+        <div class="leaderboard-streak">🔥 ${e.streak}</div>
+      </div>`;
+    }).join('');
+
+    if (currentUser) {
+      const myData = await getUserData(currentUser.uid);
+      const inTop = entries.some(e => e.uid === currentUser.uid);
+      if (!inTop && myData) {
+        html += `<hr class="leaderboard-divider"/>
+        <div class="leaderboard-entry highlight">
+          <div class="leaderboard-rank">-</div>
+          <img class="leaderboard-avatar" src="${myData.photo || ''}" onerror="this.src='https://placehold.co/36x36'"/>
+          <div class="leaderboard-name">${myData.name} (أنت)</div>
+          <div class="leaderboard-streak">🔥 ${myData.streak}</div>
+        </div>`;
+      }
+    }
+
+    listEl.innerHTML = html || '<p style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">لا يوجد لاعبين بعد!</p>';
+  };
+
+  window.closeLeaderboard = () => document.getElementById('leaderboardOverlay').classList.remove('visible');
+</script>
+
+<script>
+  // ── Ad ────────────────────────────────────────────────────────────────────
+  let adTime = 5;
+  const adTimer = setInterval(() => {
+    adTime--;
+    document.getElementById('adCountdown').textContent = adTime;
+    if (adTime <= 0) {
+      clearInterval(adTimer);
+      const btn = document.getElementById('skipBtn');
+      btn.style.color = 'white'; btn.style.cursor = 'pointer';
+      btn.style.background = 'rgba(245,158,11,0.2)';
+      btn.style.borderColor = 'rgba(245,158,11,0.5)';
+      btn.innerHTML = 'تخطي ✕';
+    }
+  }, 1000);
+  function skipAd() { if (adTime <= 0) document.getElementById('adOverlay').remove(); }
+
+
+  const KEYBOARD_ROWS = [
+    ['ؤ', 'ء', 'ئ'],
+    ['ج', 'ح', 'خ', 'ه', 'ع', 'غ', 'ف', 'ق', 'ث', 'ص', 'ض'],
+    ['ة', 'ك', 'م', 'ن', 'ت', 'ا', 'ل', 'ب', 'ي', 'س', 'ش'],
+    ['⌫', 'د', 'ذ', 'ط', 'ظ', 'ز', 'و', 'ى', 'ر', 'إدخال']
+  ];
+
+  const STORAGE_KEY = 'kalima_game_state';
+  const WELCOME_SEEN_KEY = 'kalima_welcome_seen';
+  let WORDS = [];
+  let targetWord = '';
+  let guesses = [];
+  let currentGuess = '';
+  let gameState = 'playing';
+  let keyboardStatus = {};
+  let todayKey = '';
+
+  const gameArea = document.getElementById('game-area');
+  const messageEl = document.getElementById('message');
+  const statsEl = document.getElementById('stats');
+  const countdownEl = document.getElementById('countdown');
+  const gameOverOverlay = document.getElementById('gameOverOverlay');
+  const gameOverTitle = document.getElementById('gameOverTitle');
+  const gameOverMessage = document.getElementById('gameOverMessage');
+  const wordReveal = document.getElementById('wordReveal');
+  const modalCountdown = document.getElementById('modalCountdown');
+  const welcomeOverlay = document.getElementById('welcomeOverlay');
+  const welcomeClose = document.getElementById('welcomeClose');
+  const welcomeStart = document.getElementById('welcomeStart');
+  const helpBtn = document.getElementById('helpBtn');
+  let boardEl, keyboardEl;
+
+  // ── Welcome Modal ─────────────────────────────────────────────────────────
+  function showWelcomeModal() { welcomeOverlay.classList.add('visible'); }
+  function hideWelcomeModal() {
+    welcomeOverlay.classList.remove('visible');
+    try { localStorage.setItem(WELCOME_SEEN_KEY, '1'); } catch(e) {}
+  }
+  welcomeClose.addEventListener('click', hideWelcomeModal);
+  welcomeStart.addEventListener('click', hideWelcomeModal);
+  welcomeOverlay.addEventListener('click', (e) => { if (e.target === welcomeOverlay) hideWelcomeModal(); });
+  helpBtn.addEventListener('click', () => welcomeOverlay.classList.add('visible'));
+  function maybeShowWelcome() {
+    try { if (!localStorage.getItem(WELCOME_SEEN_KEY)) showWelcomeModal(); }
+    catch(e) { showWelcomeModal(); }
+  }
+
+  // ── Load words ────────────────────────────────────────────────────────────
+  async function loadWords() {
+    try {
+      const response = await fetch('words.txt');
+      if (!response.ok) throw new Error('Failed to load words.txt');
+      const text = await response.text();
+      WORDS = text.split('\n').map(w => w.trim()).filter(w => w.length === 5);
+      if (WORDS.length === 0) throw new Error('No valid 5-letter words found in words.txt');
+      init();
+    } catch (err) {
+      gameArea.innerHTML = `<div class="loading"><span style="color:#f87171;">⚠️ تعذّر تحميل قائمة الكلمات</span><span style="font-size:0.8rem;color:rgba(255,255,255,0.3);">${err.message}</span></div>`;
+    }
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function getTodayKey() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  }
+
+  function getWordForDay(dateKey) {
+    const startDate = new Date('2026-05-26');
+    const today = new Date(dateKey);
+    const dayNumber = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+    const shuffled = [...WORDS];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const seed = (i * 9301 + 49297) % 233280;
+      const j = Math.floor((seed / 233280) * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled[dayNumber % shuffled.length];
+  }
+
+  function getMsUntilMidnight() {
+    const now = new Date(); const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0); return midnight - now;
+  }
+
+  function formatTime(ms) {
+    const t = Math.floor(ms / 1000);
+    const h = Math.floor(t / 3600); const m = Math.floor((t % 3600) / 60); const s = t % 60;
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  function updateCountdown() {
+    const formatted = formatTime(getMsUntilMidnight());
+    countdownEl.textContent = formatted;
+    modalCountdown.textContent = formatted;
+    if (getTodayKey() !== todayKey) location.reload();
+  }
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ dateKey: todayKey, guesses, gameState, keyboardStatus }));
+  }
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return null;
+      const state = JSON.parse(saved);
+      if (state.dateKey !== todayKey) { localStorage.removeItem(STORAGE_KEY); return null; }
+      return state;
+    } catch(e) { return null; }
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  function init() {
+    todayKey = getTodayKey();
+    targetWord = getWordForDay(todayKey);
+    const savedState = loadState();
+    if (savedState) {
+      guesses = savedState.guesses; gameState = savedState.gameState;
+      keyboardStatus = savedState.keyboardStatus; currentGuess = '';
+    } else {
+      guesses = []; currentGuess = ''; gameState = 'playing'; keyboardStatus = {};
+    }
+    gameArea.innerHTML = `<div id="board" class="board"></div><div id="keyboard" class="keyboard"></div>`;
+    boardEl = document.getElementById('board');
+    keyboardEl = document.getElementById('keyboard');
+    renderBoard(); renderKeyboard();
+    if (savedState && guesses.length > 0) restorePreviousGuesses();
+    updateStats(); updateCountdown();
+    setInterval(updateCountdown, 1000);
+    if (gameState !== 'playing') setTimeout(() => showGameOverModal(), 500);
+    maybeShowWelcome();
+  }
+
+  // ── Board ─────────────────────────────────────────────────────────────────
+  function renderBoard() {
+    boardEl.innerHTML = '';
+    for (let i = 0; i < 6; i++) {
+      const row = document.createElement('div');
+      row.className = 'row'; row.id = `row-${i}`;
+      for (let j = 0; j < 5; j++) {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.innerHTML = `<div class="tile-inner" id="tile-${i}-${j}">
+          <div class="tile-front" id="front-${i}-${j}"></div>
+          <div class="tile-back" id="back-${i}-${j}"></div>
+        </div>`;
+        row.appendChild(tile);
+      }
+      boardEl.appendChild(row);
+    }
+  }
+
+  function restorePreviousGuesses() {
+    guesses.forEach((guess, rowIndex) => {
+      for (let i = 0; i < 5; i++) {
+        const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
+        const front = document.getElementById(`front-${rowIndex}-${i}`);
+        const back = document.getElementById(`back-${rowIndex}-${i}`);
+        const letter = guess[i];
+        const status = getLetterStatus(letter, i, guess);
+        front.textContent = letter; back.textContent = letter;
+        back.className = 'tile-back ' + status; tileInner.classList.add('flip');
       }
     });
+    updateKeyboard();
+  }
 
-    // ── Firestore helpers ─────────────────────────────────────────────────────
-    async function getUserData(uid) {
-      const ref = doc(db, 'users', uid);
-      const snap = await getDoc(ref);
-      return snap.exists() ? snap.data() : null;
-    }
-
-    async function updateStreak(won) {
-      if (!currentUser) return 0;
-      const uid = currentUser.uid;
-      const today = getTodayKey();
-      const ref = doc(db, 'users', uid);
-      const snap = await getDoc(ref);
-
-      let streak = 0;
-      let lastPlayed = null;
-
-      if (snap.exists()) {
-        streak = snap.data().streak || 0;
-        lastPlayed = snap.data().lastPlayed || null;
-      }
-
-      // Don't update if already played today
-      if (lastPlayed === today) return streak;
-
-      const yesterday = getYesterdayKey();
-      if (won) {
-        streak = (lastPlayed === yesterday) ? streak + 1 : 1;
-      } else {
-        streak = 0;
-      }
-
-      await setDoc(ref, {
-        uid,
-        name: currentUser.displayName,
-        photo: currentUser.photoURL,
-        streak,
-        lastPlayed: today
-      }, { merge: true });
-
-      // Update auth bar
-      const authBar = document.getElementById('authBar');
-      if (currentUser) {
-        authBar.innerHTML = `
-          <span class="user-streak">🔥 ${streak}</span>
-          <img class="user-avatar" src="${currentUser.photoURL}" title="${currentUser.displayName}" onclick="window.signOutUser()"/>
-        `;
-      }
-
-      return streak;
-    }
-
-    window.updateStreakOnGameEnd = async (won) => {
-      const streak = await updateStreak(won);
-      const streakDisplay = document.getElementById('streakDisplay');
-      if (currentUser) {
-        streakDisplay.textContent = won ? `🔥 سلسلتك الحالية: ${streak} يوم` : 'انتهت سلسلتك 😔';
-      } else {
-        streakDisplay.textContent = 'سجل دخولك لحفظ سلسلتك!';
-      }
-    };
-
-    // ── Leaderboard ───────────────────────────────────────────────────────────
-    window.openLeaderboard = async () => {
-      document.getElementById('leaderboardOverlay').classList.add('visible');
-      const listEl = document.getElementById('leaderboardList');
-      listEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
-
-      const q = query(collection(db, 'users'), orderBy('streak', 'desc'), limit(10));
-      const snap = await getDocs(q);
-
-      const entries = [];
-      snap.forEach(d => entries.push(d.data()));
-
-      let html = '';
-      const rankSymbols = ['🥇','🥈','🥉'];
-
-      entries.forEach((entry, i) => {
-        const isMe = currentUser && entry.uid === currentUser.uid;
-        const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-        const rank = i < 3 ? rankSymbols[i] : `${i + 1}`;
-        html += `
-          <div class="leaderboard-entry ${isMe ? 'highlight' : ''}">
-            <div class="leaderboard-rank ${rankClass}">${rank}</div>
-            <img class="leaderboard-avatar" src="${entry.photo || 'https://placehold.co/36x36/1a1a2e/fff?text=؟'}" onerror="this.src='https://placehold.co/36x36/1a1a2e/fff?text=؟'"/>
-            <div class="leaderboard-name">${entry.name || 'مجهول'}${isMe ? ' (أنت)' : ''}</div>
-            <div class="leaderboard-streak">🔥 ${entry.streak}</div>
-          </div>`;
+  // ── Keyboard ──────────────────────────────────────────────────────────────
+  function renderKeyboard() {
+    keyboardEl.innerHTML = '';
+    KEYBOARD_ROWS.forEach(row => {
+      const rowEl = document.createElement('div');
+      rowEl.className = 'keyboard-row';
+      row.forEach(key => {
+        const keyEl = document.createElement('button');
+        keyEl.className = 'key' + (key.length > 1 ? ' wide' : '');
+        if (keyboardStatus[key]) keyEl.className += ' ' + keyboardStatus[key];
+        keyEl.textContent = key; keyEl.dataset.key = key;
+        keyEl.addEventListener('click', () => handleKeyPress(key));
+        if (gameState !== 'playing') keyEl.disabled = true;
+        rowEl.appendChild(keyEl);
       });
+      keyboardEl.appendChild(rowEl);
+    });
+  }
 
-      // Show current user's rank if not in top 10
-      if (currentUser) {
-        const myData = await getUserData(currentUser.uid);
-        const inTop10 = entries.some(e => e.uid === currentUser.uid);
-        if (!inTop10 && myData) {
-          html += `<hr class="leaderboard-divider"/>
-          <div class="leaderboard-entry highlight">
-            <div class="leaderboard-rank">-</div>
-            <img class="leaderboard-avatar" src="${myData.photo || ''}" onerror="this.src='https://placehold.co/36x36'"/>
-            <div class="leaderboard-name">${myData.name} (أنت)</div>
-            <div class="leaderboard-streak">🔥 ${myData.streak}</div>
-          </div>`;
-        }
+  function updateKeyboard() {
+    document.querySelectorAll('.key').forEach(keyEl => {
+      const key = keyEl.dataset.key;
+      if (keyboardStatus[key]) keyEl.className = 'key' + (key.length > 1 ? ' wide' : '') + ' ' + keyboardStatus[key];
+      if (gameState !== 'playing') keyEl.disabled = true;
+    });
+  }
+
+  // ── Game Logic ────────────────────────────────────────────────────────────
+  function getLetterStatus(letter, index, word) {
+    if (targetWord[index] === letter) return 'correct';
+    if (targetWord.includes(letter)) {
+      const targetCount = targetWord.split('').filter(l => l === letter).length;
+      const correctCount = word.split('').filter((l, i) => l === letter && targetWord[i] === letter).length;
+      const beforeCount = word.slice(0, index).split('').filter((l, i) => l === letter && targetWord[i] !== letter).length;
+      if (beforeCount < targetCount - correctCount) return 'present';
+    }
+    return 'absent';
+  }
+
+  function updateCurrentRow() {
+    const rowIndex = guesses.length;
+    for (let i = 0; i < 5; i++) {
+      const front = document.getElementById(`front-${rowIndex}-${i}`);
+      const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
+      const letter = currentGuess[i] || '';
+      if (letter && front.textContent !== letter) {
+        tileInner.classList.add('pop');
+        setTimeout(() => tileInner.classList.remove('pop'), 100);
       }
-
-      if (!html) html = '<p style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;">لا يوجد لاعبين بعد!</p>';
-      listEl.innerHTML = html;
-    };
-
-    window.closeLeaderboard = () => {
-      document.getElementById('leaderboardOverlay').classList.remove('visible');
-    };
-
-  </script>
-
-  <script>
-    // ── Ad ────────────────────────────────────────────────────────────────────
-    let adTime = 5;
-    const adTimer = setInterval(() => {
-      adTime--;
-      document.getElementById('adCountdown').textContent = adTime;
-      if (adTime <= 0) {
-        clearInterval(adTimer);
-        const btn = document.getElementById('skipBtn');
-        btn.style.color = 'white';
-        btn.style.cursor = 'pointer';
-        btn.style.background = 'rgba(245,158,11,0.2)';
-        btn.style.borderColor = 'rgba(245,158,11,0.5)';
-        btn.innerHTML = 'تخطي ✕';
-      }
-    }, 1000);
-
-    function skipAd() {
-      if (adTime <= 0) document.getElementById('adOverlay').remove();
+      front.textContent = letter;
+      front.className = 'tile-front' + (letter ? ' filled' : '');
     }
+  }
 
-    // ── Game ──────────────────────────────────────────────────────────────────
-    const WORD_OVERRIDE = '';
-
-    const KEYBOARD_ROWS = [
-      ['ؤ', 'ء', 'ئ'],
-      ['ج', 'ح', 'خ', 'ه', 'ع', 'غ', 'ف', 'ق', 'ث', 'ص', 'ض'],
-      ['ة', 'ك', 'م', 'ن', 'ت', 'ا', 'ل', 'ب', 'ي', 'س', 'ش'],
-      ['⌫', 'د', 'ذ', 'ط', 'ظ', 'ز', 'و', 'ى', 'ر', 'إدخال']
-    ];
-
-    const STORAGE_KEY = 'kalima_game_state';
-    let WORDS = [];
-    let targetWord = '';
-    let guesses = [];
-    let currentGuess = '';
-    let gameState = 'playing';
-    let keyboardStatus = {};
-    let todayKey = '';
-
-    const gameArea = document.getElementById('game-area');
-    const messageEl = document.getElementById('message');
-    const statsEl = document.getElementById('stats');
-    const countdownEl = document.getElementById('countdown');
-    const gameOverOverlay = document.getElementById('gameOverOverlay');
-    const gameOverTitle = document.getElementById('gameOverTitle');
-    const gameOverMessage = document.getElementById('gameOverMessage');
-    const wordReveal = document.getElementById('wordReveal');
-    const modalCountdown = document.getElementById('modalCountdown');
-    let boardEl, keyboardEl;
-
-    async function loadWords() {
-      try {
-        const response = await fetch('words.txt');
-        if (!response.ok) throw new Error('Failed to load words.txt');
-        const text = await response.text();
-        WORDS = text.split('\n').map(w => w.trim()).filter(w => w.length === 5);
-        if (WORDS.length === 0) throw new Error('No valid 5-letter words found in words.txt');
-        init();
-      } catch (err) {
-        gameArea.innerHTML = `<div class="loading"><span style="color:#f87171;">⚠️ تعذّر تحميل قائمة الكلمات</span></div>`;
-      }
-    }
-
-    function getTodayKey() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-    }
-
-    function getYesterdayKey() {
-      const d = new Date();
-      d.setDate(d.getDate() - 1);
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    }
-
-    function getWordForDay(dateKey) {
-      const startDate = new Date('2026-01-01');
-      const today = new Date(dateKey);
-      const dayNumber = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-      const shuffled = [...WORDS];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const seed = (i * 9301 + 49297) % 233280;
-        const j = Math.floor((seed / 233280) * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled[dayNumber % shuffled.length];
-    }
-
-    function getMsUntilMidnight() {
-      const now = new Date();
-      const midnight = new Date(now);
-      midnight.setHours(24, 0, 0, 0);
-      return midnight - now;
-    }
-
-    function formatTime(ms) {
-      const t = Math.floor(ms / 1000);
-      const h = Math.floor(t / 3600);
-      const m = Math.floor((t % 3600) / 60);
-      const s = t % 60;
-      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    }
-
-    function updateCountdown() {
-      const formatted = formatTime(getMsUntilMidnight());
-      countdownEl.textContent = formatted;
-      modalCountdown.textContent = formatted;
-      if (getTodayKey() !== todayKey) location.reload();
-    }
-
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ dateKey: todayKey, guesses, gameState, keyboardStatus }));
-    }
-
-    function loadState() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (!saved) return null;
-        const state = JSON.parse(saved);
-        if (state.dateKey !== todayKey) { localStorage.removeItem(STORAGE_KEY); return null; }
-        return state;
-      } catch(e) { return null; }
-    }
-
-    function init() {
-      todayKey = getTodayKey();
-      targetWord = WORD_OVERRIDE || getWordForDay(todayKey);
-      const savedState = loadState();
-      if (savedState) {
-        guesses = savedState.guesses;
-        gameState = savedState.gameState;
-        keyboardStatus = savedState.keyboardStatus;
-        currentGuess = '';
-      } else {
-        guesses = []; currentGuess = ''; gameState = 'playing'; keyboardStatus = {};
-      }
-      gameArea.innerHTML = `<div id="board" class="board"></div><div id="keyboard" class="keyboard"></div>`;
-      boardEl = document.getElementById('board');
-      keyboardEl = document.getElementById('keyboard');
-      renderBoard();
-      renderKeyboard();
-      if (savedState && guesses.length > 0) restorePreviousGuesses();
-      updateStats();
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-      if (gameState !== 'playing') setTimeout(() => showGameOverModal(), 500);
-    }
-
-    function renderBoard() {
-      boardEl.innerHTML = '';
-      for (let i = 0; i < 6; i++) {
-        const row = document.createElement('div');
-        row.className = 'row'; row.id = `row-${i}`;
-        for (let j = 0; j < 5; j++) {
-          const tile = document.createElement('div');
-          tile.className = 'tile';
-          tile.innerHTML = `<div class="tile-inner" id="tile-${i}-${j}">
-            <div class="tile-front" id="front-${i}-${j}"></div>
-            <div class="tile-back" id="back-${i}-${j}"></div>
-          </div>`;
-          row.appendChild(tile);
-        }
-        boardEl.appendChild(row);
-      }
-    }
-
-    function restorePreviousGuesses() {
-      guesses.forEach((guess, rowIndex) => {
-        for (let i = 0; i < 5; i++) {
+  function revealGuess(rowIndex, guess) {
+    return new Promise(resolve => {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
           const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
-          const front = document.getElementById(`front-${rowIndex}-${i}`);
           const back = document.getElementById(`back-${rowIndex}-${i}`);
           const letter = guess[i];
           const status = getLetterStatus(letter, i, guess);
-          front.textContent = letter;
-          back.textContent = letter;
-          back.className = 'tile-back ' + status;
+          back.textContent = letter; back.className = 'tile-back ' + status;
           tileInner.classList.add('flip');
-        }
-      });
-      updateKeyboard();
-    }
-
-    function renderKeyboard() {
-      keyboardEl.innerHTML = '';
-      KEYBOARD_ROWS.forEach(row => {
-        const rowEl = document.createElement('div');
-        rowEl.className = 'keyboard-row';
-        row.forEach(key => {
-          const keyEl = document.createElement('button');
-          keyEl.className = 'key' + (key.length > 1 ? ' wide' : '');
-          if (keyboardStatus[key]) keyEl.className += ' ' + keyboardStatus[key];
-          keyEl.textContent = key;
-          keyEl.dataset.key = key;
-          keyEl.addEventListener('click', () => handleKeyPress(key));
-          if (gameState !== 'playing') keyEl.disabled = true;
-          rowEl.appendChild(keyEl);
-        });
-        keyboardEl.appendChild(rowEl);
-      });
-    }
-
-    function updateKeyboard() {
-      document.querySelectorAll('.key').forEach(keyEl => {
-        const key = keyEl.dataset.key;
-        if (keyboardStatus[key]) keyEl.className = 'key' + (key.length > 1 ? ' wide' : '') + ' ' + keyboardStatus[key];
-        if (gameState !== 'playing') keyEl.disabled = true;
-      });
-    }
-
-    function getLetterStatus(letter, index, word) {
-      if (targetWord[index] === letter) return 'correct';
-      if (targetWord.includes(letter)) {
-        const targetCount = targetWord.split('').filter(l => l === letter).length;
-        const correctCount = word.split('').filter((l, i) => l === letter && targetWord[i] === letter).length;
-        const beforeCount = word.slice(0, index).split('').filter((l, i) => l === letter && targetWord[i] !== letter).length;
-        if (beforeCount < targetCount - correctCount) return 'present';
+          if (status === 'correct') keyboardStatus[letter] = 'correct';
+          else if (status === 'present' && keyboardStatus[letter] !== 'correct') keyboardStatus[letter] = 'present';
+          else if (!keyboardStatus[letter]) keyboardStatus[letter] = 'absent';
+          if (i === 4) setTimeout(() => { updateKeyboard(); resolve(); }, 300);
+        }, i * 300);
       }
-      return 'absent';
-    }
-
-    function updateCurrentRow() {
-      const rowIndex = guesses.length;
-      for (let i = 0; i < 5; i++) {
-        const front = document.getElementById(`front-${rowIndex}-${i}`);
-        const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
-        const letter = currentGuess[i] || '';
-        if (letter && front.textContent !== letter) {
-          tileInner.classList.add('pop');
-          setTimeout(() => tileInner.classList.remove('pop'), 100);
-        }
-        front.textContent = letter;
-        front.className = 'tile-front' + (letter ? ' filled' : '');
-      }
-    }
-
-    function revealGuess(rowIndex, guess) {
-      return new Promise(resolve => {
-        for (let i = 0; i < 5; i++) {
-          setTimeout(() => {
-            const tileInner = document.getElementById(`tile-${rowIndex}-${i}`);
-            const back = document.getElementById(`back-${rowIndex}-${i}`);
-            const letter = guess[i];
-            const status = getLetterStatus(letter, i, guess);
-            back.textContent = letter;
-            back.className = 'tile-back ' + status;
-            tileInner.classList.add('flip');
-            if (status === 'correct') keyboardStatus[letter] = 'correct';
-            else if (status === 'present' && keyboardStatus[letter] !== 'correct') keyboardStatus[letter] = 'present';
-            else if (!keyboardStatus[letter]) keyboardStatus[letter] = 'absent';
-            if (i === 4) setTimeout(() => { updateKeyboard(); resolve(); }, 300);
-          }, i * 300);
-        }
-      });
-    }
-
-    function showMessage(text, duration = 1500) {
-      messageEl.textContent = text;
-      messageEl.classList.remove('hidden');
-      if (duration > 0) setTimeout(() => messageEl.classList.add('hidden'), duration);
-    }
-
-    function shakeRow(rowIndex) {
-      const row = document.getElementById(`row-${rowIndex}`);
-      row.classList.add('shake');
-      setTimeout(() => row.classList.remove('shake'), 500);
-    }
-
-    function updateStats() {
-      const arabicNums = ['٠','١','٢','٣','٤','٥','٦'];
-      statsEl.textContent = `${arabicNums[guesses.length]}/٦ محاولات`;
-    }
-
-    function showGameOverModal() {
-      if (gameState === 'won') {
-        const messages = ['وحش!!','ذيب!!','بطل!','كفو!','عاش!','حلو!'];
-        gameOverTitle.textContent = messages[Math.min(guesses.length - 1, 5)];
-        gameOverMessage.textContent = `فزت في ${guesses.length} محاولات`;
-      } else {
-        gameOverTitle.textContent = 'انتهت اللعبة';
-        gameOverMessage.textContent = 'حظاً أوفر غداً!';
-      }
-      wordReveal.textContent = targetWord;
-      gameOverOverlay.classList.add('visible');
-      if (window.updateStreakOnGameEnd) window.updateStreakOnGameEnd(gameState === 'won');
-    }
-
-    async function submitGuess() {
-      if (currentGuess.length !== 5) {
-        shakeRow(guesses.length); showMessage('أدخل ٥ أحرف'); return;
-      }
-      if (!WORDS.includes(currentGuess)) {
-        shakeRow(guesses.length); showMessage('الكلمة غير موجودة في القاموس'); return;
-      }
-      const rowIndex = guesses.length;
-      guesses.push(currentGuess);
-      await revealGuess(rowIndex, currentGuess);
-      if (currentGuess === targetWord) {
-        gameState = 'won'; saveState(); setTimeout(() => showGameOverModal(), 500);
-      } else if (guesses.length >= 6) {
-        gameState = 'lost'; saveState(); setTimeout(() => showGameOverModal(), 500);
-      } else {
-        saveState();
-      }
-      currentGuess = '';
-      updateStats();
-    }
-
-    function handleKeyPress(key) {
-      if (gameState !== 'playing') return;
-      if (key === 'إدخال') submitGuess();
-      else if (key === '⌫') { currentGuess = currentGuess.slice(0, -1); updateCurrentRow(); }
-      else if (currentGuess.length < 5) { currentGuess += key; updateCurrentRow(); }
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (gameState !== 'playing') return;
-      if (e.key === 'Enter') handleKeyPress('إدخال');
-      else if (e.key === 'Backspace') handleKeyPress('⌫');
-      else if (/^[\u0600-\u06FF]$/.test(e.key)) handleKeyPress(e.key);
     });
+  }
 
-    loadWords();
-  </script>
+  function showMessage(text, duration = 1500) {
+    messageEl.textContent = text; messageEl.classList.remove('hidden');
+    if (duration > 0) setTimeout(() => messageEl.classList.add('hidden'), duration);
+  }
+
+  function shakeRow(rowIndex) {
+    const row = document.getElementById(`row-${rowIndex}`);
+    row.classList.add('shake'); setTimeout(() => row.classList.remove('shake'), 500);
+  }
+
+  function updateStats() {
+    const arabicNums = ['٠','١','٢','٣','٤','٥','٦'];
+    statsEl.textContent = `${arabicNums[guesses.length]}/٦ محاولات`;
+  }
+
+  function showGameOverModal() {
+    if (gameState === 'won') {
+      const messages = ['وحش!!','ذيب!!','بطل!','كفو!','عاش!','عندك احسن!'];
+      gameOverTitle.textContent = messages[Math.min(guesses.length - 1, 5)];
+      gameOverMessage.textContent = `فزت في ${guesses.length} محاولات`;
+    } else {
+      gameOverTitle.textContent = 'انتهت اللعبة';
+      gameOverMessage.textContent = 'حظاً أوفر غداً!';
+    }
+    wordReveal.textContent = targetWord;
+    gameOverOverlay.classList.add('visible');
+    if (window.updateStreakOnGameEnd) window.updateStreakOnGameEnd(gameState === 'won');
+  }
+
+  async function submitGuess() {
+    if (currentGuess.length !== 5) { shakeRow(guesses.length); showMessage('أدخل ٥ أحرف'); return; }
+    if (!WORDS.includes(currentGuess)) { shakeRow(guesses.length); showMessage('الكلمة غير موجودة في القاموس'); return; }
+    const rowIndex = guesses.length;
+    guesses.push(currentGuess);
+    await revealGuess(rowIndex, currentGuess);
+    if (currentGuess === targetWord) {
+      gameState = 'won'; saveState(); setTimeout(() => showGameOverModal(), 500);
+    } else if (guesses.length >= 6) {
+      gameState = 'lost'; saveState(); setTimeout(() => showGameOverModal(), 500);
+    } else { saveState(); }
+    currentGuess = ''; updateStats();
+  }
+
+  function handleKeyPress(key) {
+    if (gameState !== 'playing') return;
+    if (key === 'إدخال') submitGuess();
+    else if (key === '⌫') { currentGuess = currentGuess.slice(0, -1); updateCurrentRow(); }
+    else if (currentGuess.length < 5) { currentGuess += key; updateCurrentRow(); }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && welcomeOverlay.classList.contains('visible')) { hideWelcomeModal(); return; }
+    if (gameState !== 'playing') return;
+    if (e.key === 'Enter') handleKeyPress('إدخال');
+    else if (e.key === 'Backspace') handleKeyPress('⌫');
+    else if (/^[\u0600-\u06FF]$/.test(e.key)) handleKeyPress(e.key);
+  });
+
+  loadWords();
+</script>
 </body>
 </html>
